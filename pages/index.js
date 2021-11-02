@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.scss'
+import OrderPage from '../containers/OrderPage/OrderPage'
 
 export default function Home() {
   const [restaurants, setRestaurants] = useState([])
@@ -23,6 +24,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
           Main Page
+          <OrderPage restaurants={restaurants}/>
       </main>
     </div>
   )
