@@ -7,8 +7,24 @@ const OrderPage = ({ restaurants }) => {
     const [searchTerm, setSearchTerm] = useState('')
     const [restaurantsToDisplay, setRestaurantsToDisplay] = useState([])
 
-    const getSearchResult = (list, query) => {
-        return list
+    const check = (obj, str) => {
+        for (let i in obj) {
+            if (!obj.hasOwnProperty(i)) continue;
+            if (typeof obj[i] == 'object') {
+                return check(obj[i], str);    
+            } else if (typeof obj[i] =='string' && obj[i].toLowerCase().includes(str)) {
+                return true
+            }
+        }
+    }
+    const getSearchResult = (list=[], query='') => {
+        let filteredRestaurants = [];
+        list.forEach(item => {
+            if(check(item, query) === true) {
+                filteredRestaurants.push(item)
+            }
+        })
+        return filteredRestaurants;
     }
 
     const handleSearchRestaurants = () => {
@@ -23,7 +39,7 @@ const OrderPage = ({ restaurants }) => {
                 onSubmit={handleSearchRestaurants}
             />
             <div className={styles.restaurantsList}>
-                {restaurants.map(restaurant =>
+                {restaurantsToDisplay.map(restaurant =>
                     <RestaurauntItem restaurant={restaurant} key={restaurant.Id} />
                 )}
             </div>
