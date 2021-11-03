@@ -1,21 +1,60 @@
 .restaurantItem {
     position: relative;
-    display: flex;
-    align-items: center;  
     color: #4d4d4d;
-    .infoBlock {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #ed7422;
+    box-shadow: 0px 2px 0px 0px #f5a571;
+    padding: 15px;
+    .cardHeader {
+        display: flex;
+        align-items: center;
         .restaurantInfo {
             font-weight: bold;
             font-size: 18px;
             color: #8e8b88;
+            padding-left: 15px;
+            max-width: 70%;
         }
-        .categorieItems {
-            .menuItemsList {
-                .categoryName {
-                    font-size: 16px;
-                    font-weight: bold;
-                }
+    }
+    .categorieItems {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        .btnMenu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid #ed7422;
+            box-shadow: 0px 2px 0px 0px #f5a571;
+            color: #ed7422;
+            text-transform: uppercase;
+            width: 250px;
+            height: 36px;
+            &:hover, &:focus, &:active {
+                border-color: #55c2bb;
+                color: #55c2bb;
+                box-shadow: 0px 2px 0px 0px #8ed1cd
+            }
+            .materialIcons {
+                width: 20px;
+                height: 20px;
             }
         }
-    }  
+        .menuItemsList {
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            .categoryName {
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px 0;
+                display: block;
+            }
+        }
+    }
 }

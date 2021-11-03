@@ -32,7 +32,7 @@ const OrderPage = ({ restaurants }) => {
     }
 
     return (
-        <div className="order-page">
+        <div className={styles.orderPage}>
             <SearchField
                 value={searchTerm}
                 handleChange={setSearchTerm}
