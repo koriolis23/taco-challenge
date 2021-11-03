@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import SearchField from '../../components/SearchField/SearchField'
-import RestaurauntItem from '../../components/RestaurauntItem/RestaurauntItem'
-import styles from './OrderPage.module.scss'
 
 const OrderPage = ({ restaurants }) => {
     const [searchTerm, setSearchTerm] = useState('')
@@ -17,16 +15,12 @@ const OrderPage = ({ restaurants }) => {
 
     return (
         <div className="order-page">
-            <SearchField
+            <SearchField 
                 value={searchTerm}
                 handleChange={setSearchTerm}
                 onSubmit={handleSearchRestaurants}
             />
-            <div className={styles.restaurantsList}>
-                {restaurants.map(restaurant =>
-                    <RestaurauntItem restaurant={restaurant} key={restaurant.Id} />
-                )}
-            </div>
+            Order Page
         </div>
     )
 }
