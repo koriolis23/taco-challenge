@@ -51,8 +51,6 @@ const OrderPage = ({ restaurants }) => {
                 'Content-Type': 'application/json'
             }
         })
-        const data = await response.json()
-        console.log(77, data)
     }
 
     const totalPrice = fields.reduce((a, b) => a + (b['Price'] || 0), 0)
