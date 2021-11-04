@@ -5,7 +5,7 @@ import { useState } from 'react'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 
-const RestaurauntItem = ({ restaurant = {} }) => {
+const RestaurauntItem = ({ restaurant = {}, fields, setFields }) => {
     const [isActive, setIsActive] = useState(false)
     return (
         <>
@@ -38,7 +38,12 @@ const RestaurauntItem = ({ restaurant = {} }) => {
                                     <span className={styles.categoryName}>{category.Name}</span>
                                     {category.MenuItems.map(item => {
                                         return (
-                                            <MenuItem item={item} key={item.Id} />
+                                            <MenuItem 
+                                                item={item} 
+                                                key={item.Id}
+                                                fields={fields}
+                                                setFields={setFields} 
+                                            />
                                         )
                                     })}
                                 </div>
