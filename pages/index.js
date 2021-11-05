@@ -23,9 +23,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-          Main Page
-          <OrderPage restaurants={restaurants}/>
+        <OrderPage restaurants={restaurants} />
       </main>
+      <div id="modal-root"></div>
     </div>
   )
 }
