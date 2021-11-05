@@ -2,11 +2,13 @@ import { useState } from 'react'
 import SearchField from '../../components/SearchField/SearchField'
 import RestaurauntItem from '../../components/RestaurauntItem/RestaurauntItem'
 import styles from './OrderPage.module.scss'
+import Modal from '../../components/Modal/Modal'
 
 const OrderPage = ({ restaurants }) => {
     const [values, setValues] = useState({ searchTerm: '', location: '' })
     const [restaurantsToDisplay, setRestaurantsToDisplay] = useState([])
     const [fields, setFields] = useState([])
+    const [showModal, setShowModal] = useState(false);
 
     const handleChange = (event) => {
         event.persist();
@@ -57,6 +59,9 @@ const OrderPage = ({ restaurants }) => {
                 'Content-Type': 'application/json'
             }
         })
+        if (response.status === 201) {
+            setShowModal(true)
+        }
     }
 
     const totalPrice = fields.reduce((a, b) => a + (b['Price'] || 0), 0)
@@ -82,6 +87,10 @@ const OrderPage = ({ restaurants }) => {
             <button className={styles.btnOrder} disabled={!fields.length} onClick={handleSubmitOrder}>
                 {btnOrderLabel}
             </button>
+            <Modal
+                onClose={() => setShowModal(false)}
+                show={showModal}
+            />
         </div>
     )
 }

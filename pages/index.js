@@ -25,6 +25,7 @@ export default function Home() {
       <main className={styles.main}>
         <OrderPage restaurants={restaurants} />
       </main>
+      <div id="modal-root"></div>
     </div>
   )
 }
