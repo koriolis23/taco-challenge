@@ -5,7 +5,7 @@ import { useState } from 'react'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForwardIos'
 import ArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 
-const RestaurauntItem = ({ restaurant = {}, fields, setFields }) => {
+const RestaurauntItem = ({ restaurant = {}, fields, setFields, searchedQuery = '' }) => {
     const [isActive, setIsActive] = useState(false)
     return (
         <>
@@ -33,16 +33,25 @@ const RestaurauntItem = ({ restaurant = {}, fields, setFields }) => {
                             }
                         </button>
                         {isActive && restaurant.Categories.map((category, index) => {
+                            const menuItems = category.MenuItems.filter(menuItem => {
+                                const menuItemName = menuItem.Name.toLowerCase()
+                                const categoryName = category.Name.toLowerCase()
+                                const query = searchedQuery.toLowerCase()
+                                return (
+                                    menuItemName.includes(query) ||
+                                    categoryName.includes(query)
+                                )
+                            })
                             return (
                                 <div className={styles.menuItemsList} key={index}>
-                                    <span className={styles.categoryName}>{category.Name}</span>
-                                    {category.MenuItems.map(item => {
+                                    {menuItems.length > 0 && <span className={styles.categoryName}>{category.Name}</span>}
+                                    {menuItems.map(item => {
                                         return (
-                                            <MenuItem 
-                                                item={item} 
+                                            <MenuItem
+                                                item={item}
                                                 key={item.Id}
                                                 fields={fields}
-                                                setFields={setFields} 
+                                                setFields={setFields}
                                             />
                                         )
                                     })}

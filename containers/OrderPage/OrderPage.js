@@ -4,9 +4,14 @@ import RestaurauntItem from '../../components/RestaurauntItem/RestaurauntItem'
 import styles from './OrderPage.module.scss'
 
 const OrderPage = ({ restaurants }) => {
-    const [searchTerm, setSearchTerm] = useState('')
+    const [values, setValues] = useState({ searchTerm: '', location: '' })
     const [restaurantsToDisplay, setRestaurantsToDisplay] = useState([])
     const [fields, setFields] = useState([])
+
+    const handleChange = (event) => {
+        event.persist();
+        setValues(values => ({ ...values, [event.target.name]: event.target.value }));
+    };
 
     const check = (obj, str) => {
         const stack = []
@@ -14,7 +19,6 @@ const OrderPage = ({ restaurants }) => {
         while (stack.length > 0) {
             const currentObj = stack.shift()
             const searchedQuery = str.toLowerCase()
-
             if (typeof currentObj == 'string' && currentObj.toLowerCase().includes(searchedQuery)) {
                 return true;
             }
@@ -29,18 +33,20 @@ const OrderPage = ({ restaurants }) => {
         return false
     }
 
-    const getSearchResult = (list = [], query = '') => {
+    const getSearchResult = (list = [], query) => {
         let filteredRestaurants = [];
         list.forEach(item => {
-            if (check(item, query) === true) {
-                filteredRestaurants.push(item)
+            if (item.City.includes(query.location) || item.Suburb.includes(query.location)) {
+                if (check(item, query.searchTerm) === true) {
+                    filteredRestaurants.push(item)
+                }
             }
         })
         return filteredRestaurants;
     }
 
     const handleSearchRestaurants = () => {
-        setRestaurantsToDisplay(getSearchResult(restaurants, searchTerm))
+        setRestaurantsToDisplay(getSearchResult(restaurants, values))
     }
 
     const handleSubmitOrder = async () => {
@@ -54,12 +60,12 @@ const OrderPage = ({ restaurants }) => {
     }
 
     const totalPrice = fields.reduce((a, b) => a + (b['Price'] || 0), 0)
-    const btnOrderLabel = totalPrice > 0 ? 'Order' + ` - R${totalPrice}`: 'Order'
+    const btnOrderLabel = totalPrice > 0 ? 'Order' + ` - R${totalPrice}` : 'Order'
     return (
         <div className={styles.orderPage}>
             <SearchField
-                value={searchTerm}
-                handleChange={setSearchTerm}
+                values={values}
+                handleChange={handleChange}
                 onSubmit={handleSearchRestaurants}
             />
             <div className={styles.restaurantsList}>
@@ -69,6 +75,7 @@ const OrderPage = ({ restaurants }) => {
                         key={restaurant.Id}
                         fields={fields}
                         setFields={setFields}
+                        searchedQuery={values.searchTerm}
                     />
                 )}
             </div>
